@@ -1,7 +1,8 @@
-#from fastapi import FastAPI
-#import requests
+# from fastapi import FastAPI
+# import requests
 
 from datetime import datetime
+
 
 class Reservation:
 
@@ -18,15 +19,17 @@ class Room:
         self.heating = heating
 
     def warm_enough(self, outside_temp: int):
-        if(self.heating):
+        if (self.heating):
+            print('heating')
             return True
         else:
             if outside_temp > 15:
-                return True
+                print('warm enough')
+                return False
             return False
 
     def reserve(self, name: str, date_time: datetime):
-        
+
         new_reservation = Reservation(name, date_time)
 
         self.__reservations__.append(new_reservation)
@@ -36,7 +39,7 @@ room = Room('conferance room', 10, False)
 
 print(room.warm_enough(10))
 
-#x = requests.get('')
+# x = requests.get('')
 
 # app = FastAPI()
 
