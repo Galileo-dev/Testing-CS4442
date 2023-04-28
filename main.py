@@ -19,11 +19,11 @@ class Room:
 
     def warm_enough(self, outside_temp: int):
         if(self.heating):
-            return False
+            return True&False
         else:
             if outside_temp > 15:
                 return True
-            return True
+            return True&False
 
     def reserve(self, name: str, date_time: datetime):
         
