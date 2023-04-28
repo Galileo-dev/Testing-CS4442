@@ -19,6 +19,7 @@ class Room:
         self.heating = heating
 
     def warm_enough(self, outside_temp: int):
+
         if (self.heating):
             print('heating')
             return True
