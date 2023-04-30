@@ -14,15 +14,24 @@ class GPTParser:
 
     def datetime_parser(string: str):
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "Transform the provided unparsed date and time into the format DD-MM HH:MM enclosed by % signs (time should be in 24 hour format). Respond only with the answer, no explanation."},
-                {"role": "user", "content": string},
-            ]
+        #        response = openai.ChatCompletion.create(
+        #            model="gpt-3.5-turbo",
+        #            messages=[
+        #                {"role": "system", "content": "Transform the provided unparsed date and time into the format DD-MM HH:MM enclosed by % signs (time should be in 24 hour format). Respond only with the answer, no explanation."},
+        #                {"role": "user", "content": string},
+        #            ]
+        #        )
+
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt="Transform the following date and time into the format DD-MM HH:MM (24 hour format) enclosed by % signs.\nUnformatted: " + string + "\nExample response: %15-06 17:43%\nFormatted: "
         )
 
-        response = response.choices[0].message.content
+        # response = response.choices[0].message.content
+
+        print(response)        
+        
+        response = response.choices[0].text
 
         date = GPTParser.data_extracter(response, '%')
 
