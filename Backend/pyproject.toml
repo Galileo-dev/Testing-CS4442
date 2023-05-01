@@ -29,11 +29,9 @@ requests = "^2.28.1"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-# markers = [
-#     "pg: tests for postgresql.",
-#     "mysql: tests for mysql.",
-#     "sqlite: tests for sqlite3.",
-# ]
+markers = [
+    "dt: dumb test",
+]
 env = [
     "POETRY_VIRTUALENVS_IN_PROJECT=True"
 ]
