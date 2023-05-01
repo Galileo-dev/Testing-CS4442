@@ -3,7 +3,6 @@ name = "css4442_testing"
 version = "0.0.1"
 description = "Smart Booking using GPT"
 authors = ["galileo-dev <galileo-dev@users.noreply.github.com>"]
-packages = [{ include = "fastapi_template" }]
 repository = "https://github.com/Galileo-dev/Testing-CS4442"
 homepage = "https://github.com/Galileo-dev/Testing-CS4442"
 readme = "README.md"
