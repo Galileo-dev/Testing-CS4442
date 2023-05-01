@@ -12,4 +12,4 @@ REM Install requirements from requirements.txt
 pip install -r requirements.txt
 
 REM Start the FastAPI server
-uvicorn main:app --reload
+CALL uvicorn main:app --reload
