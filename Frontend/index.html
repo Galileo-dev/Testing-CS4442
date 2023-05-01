@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/pico.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Room Booking</title>
+  </head>
+  <body>
+    <main class="container">
+      <div class="grid"> 
+        <div>
+          <h1>Add New Booking</h1>
+          <label for="name">
+            Name
+            <input type="text" id="name-field" name="name" placeholder="Name" required>
+          </label>
+          <label for="room">
+            Room
+            <input type="text" id="room-field" name="room" placeholder="Room" required>
+          </label>
+          <label for="Time">
+            Time
+            <input type="text" id="time-field" name="time" placeholder="Time" required>
+          </label>
+          <button type="submit" id="reserve-button"><b>Book Now</b></button>
+        </div>
+        <div>
+          <h1 style="text-align: center;">Current Bookings</h1>
+          <figure>
+            <table>
+              <thead>
+                <tr>
+                  <td style="text-align: center"><b>Name</b></td>
+                  <td style="text-align: center"><b>Room</b></td>
+                  <td style="text-align: center"><b>Time</b></td>
+                </tr>
+              </thead>
+              <tbody id='reservation-table-body'>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
+
