@@ -9,6 +9,7 @@ parameters = [
     ("The 13th of dec at one pm", "13-12 13:00")
 ]
 
+@pytest.mark.skip(reason="openAI key is missing")
 @pytest.mark.parametrize("param, expected_result", parameters)
 def test_my_function(param, expected_result):
     result = GPTParser.datetime_parser(param)
