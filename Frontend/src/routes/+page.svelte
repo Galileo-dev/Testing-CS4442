@@ -1,7 +1,13 @@
-<h1 class="text-3xl font-bold underline">Hello world!</h1>
+<script>
+	import Login from '$lib/Login.svelte';
+</script>
+
+<h1 class="text-3xl font-bold underline">
+	<Login />
+</h1>
 
 <style lang="postcss">
 	:global(html) {
-		background-color: theme(colors.gray.600);
+		background-color: theme(colors.gray.100);
 	}
 </style>
