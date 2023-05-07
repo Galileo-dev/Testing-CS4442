@@ -2,9 +2,11 @@
 	import Login from '$lib/Login.svelte';
 </script>
 
-<h1 class="text-3xl font-bold underline">
-	<Login />
-</h1>
+<div class="flex items-center justify-center h-screen">
+	<div class="mx-auto">
+		<Login />
+	</div>
+</div>
 
 <style lang="postcss">
 	:global(html) {
