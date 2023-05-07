@@ -163,3 +163,7 @@ cython_debug/
 # Super secret file
 book_me_service_account_keys.json
 firebase_config.json
+
+# mac os
+.DS_Store
+
