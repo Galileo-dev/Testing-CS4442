@@ -1,3 +1,4 @@
+import traceback
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends, HTTPException, status, Response, FastAPI, Depends
 from firebase_admin import auth, credentials, initialize_app
@@ -20,8 +21,10 @@ async def get_user_token(res: Response, credential: HTTPAuthorizationCredentials
             headers={'WWW-Authenticate': 'Bearer realm="auth_required"'},
         )
     try:
+        print(credential.credentials)
         decoded_token = auth.verify_id_token(credential.credentials)
     except Exception as err:
+        traceback.print_exc()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid authentication from Firebase. {err}",
