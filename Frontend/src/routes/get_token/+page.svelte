@@ -4,10 +4,7 @@
 
 <div class="flex items-center justify-center h-screen">
 	<div class="mx-auto">
-		<!-- card that contains the comming soon text -->
-		<div class="bg-white rounded-lg shadow-lg p-6 overflow-hidden">
-			<p class="text-center mb-4 truncate text-4xl">Coming Soonest</p>
-		</div>
+		<Login />
 	</div>
 </div>
 
