@@ -4,10 +4,6 @@ from firebase_admin import firestore
 
 
 def test_firestore():
-    # Initialize the Firebase SDK
-    cred = credentials.Certificate("../book_me_service_account_keys.json")
-    firebase_admin.initialize_app(cred)
-
     # Add some data to Firestore
     db = firestore.client()
     doc_ref = db.collection("users").document("alovelace")
