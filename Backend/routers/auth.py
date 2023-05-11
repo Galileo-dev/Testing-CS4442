@@ -4,13 +4,10 @@ from fastapi import Depends, HTTPException, status, Response, FastAPI, Depends
 from firebase_admin import auth, credentials, initialize_app
 from fastapi import APIRouter
 
-cred = credentials.Certificate('../book_me_service_account_keys.json')
+cred = credentials.Certificate('./book_me_service_account_keys.json')
 initialize_app(cred)
 
 router = APIRouter()
-
-# signup endpoint
-
 
 # login endpoint
 async def get_user_token(res: Response, credential: HTTPAuthorizationCredentials = Depends(HTTPBearer(auto_error=False))):

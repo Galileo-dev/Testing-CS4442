@@ -1,10 +1,6 @@
 fastapi
 uvicorn[standard]
-<<<<<<< HEAD
 firebase-admin
 starlette
-urllib3==1.26.15 
-=======
-openai
-supabase
->>>>>>> f2954af (started on supabase implementation)
+urllib3==1.26.15
+pytest
