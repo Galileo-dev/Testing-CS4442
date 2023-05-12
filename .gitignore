@@ -171,3 +171,6 @@ firebase_config.json
 .vscode/
 
 Backend/poetry.lock
+
+# pnpm
+pnpm-lock.yaml
