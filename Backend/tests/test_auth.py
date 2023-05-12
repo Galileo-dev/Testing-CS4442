@@ -21,8 +21,8 @@ def client():
 
 @pytest.fixture(scope="session")
 def firebase_app():
+    # use anonymous credentials
     cred = credentials.Certificate("../book_me_service_account_keys.json")
-
     return initialize_app(cred)
 
 
