@@ -70,10 +70,10 @@ jobs:
       - name: Install firebase
         run: curl -sL https://firebase.tools | bash
       - name: Run firebase emulators
-        run: firebase emulators:start --only auth,firestore &
+        run: firebase emulators:start --only auth,firestore \"poetry run pytest -vv --exitfirst\"
         env:
           FIREBASE_AUTH_EMULATOR_HOST: localhost:9099
           FIRESTORE_EMULATOR_HOST: localhost:8080
-      - name: Run tests
-        run: poetry run pytest -vv --exitfirst
+      # - name: Run tests
+      #   run: poetry run pytest -vv --exitfirst
 # TODO: Add coverage
