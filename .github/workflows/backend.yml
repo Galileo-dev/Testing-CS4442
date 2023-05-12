@@ -70,7 +70,7 @@ jobs:
       - name: Install firebase
         run: curl -sL https://firebase.tools | bash
       - name: Run firebase emulators
-        run: firebase emulators:exec --only auth,firestore \"poetry run pytest -vv --exitfirst\"
+        run: firebase emulators:exec --only auth,firestore "poetry run pytest -vv --exitfirst"
         env:
           FIREBASE_AUTH_EMULATOR_HOST: localhost:9099
           FIRESTORE_EMULATOR_HOST: localhost:8080
