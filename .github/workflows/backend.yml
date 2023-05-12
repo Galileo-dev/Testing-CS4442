@@ -65,8 +65,7 @@ jobs:
           git config --global user.name "css4442_testing"
           git config --global user.email "css4442_testing@pytest.python"
       - name: Create service account keys file
-        run: |
-          echo "${{ secrets.SECRET_NAME }}" > ../book_me_service_account_keys.json
+        run: echo "${{ secrets.SECRET_NAME }}" | tr -d '\n' > ../book_me_service_account_keys.json
       - name: Install firebase
         run: curl -sL https://firebase.tools | bash
       - name: Run firebase emulators
