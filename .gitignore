@@ -174,3 +174,4 @@ Backend/poetry.lock
 
 # pnpm
 pnpm-lock.yaml
+Frontend/pnpm-lock.yaml
