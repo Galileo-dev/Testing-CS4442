@@ -1,7 +1,17 @@
 from firebase_admin import credentials, firestore
 
+from reservation import Reservation
+
+'''
+To Do
+--------
+1. Add reservation
+    -> add reservation to db
+2. Get reservations
+    -> return a list of all reservations on the db
+'''
+
 class Database:
-    
     cred = credentials.ApplicationDefault()
     db = firestore.client()
     
@@ -25,4 +35,6 @@ class Database:
                 return user.to_dict()        
         return None
     
-    # def addReservation(self, room: str, uid: str, )
+    
+    
+    def addReservation(self, reservation: Reservation)
