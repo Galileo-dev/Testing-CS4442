@@ -1,11 +1,14 @@
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from firebase import get_firebase_app
 from dependencies import get_query_token, get_token_header
 from routers import users, auth
 
-
 app = FastAPI(dependencies=[])
+
+# init firebase
+firebase_app = get_firebase_app()
+
 allow_all = ['*']
 app.add_middleware(
     CORSMiddleware,

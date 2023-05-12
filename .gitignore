@@ -167,3 +167,7 @@ firebase_config.json
 # mac os
 .DS_Store
 
+# visual studio code
+.vscode/
+
+Backend/poetry.lock
