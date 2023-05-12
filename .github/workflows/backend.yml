@@ -65,7 +65,9 @@ jobs:
           git config --global user.name "css4442_testing"
           git config --global user.email "css4442_testing@pytest.python"
       - name: Create service account keys file
-        run: echo ${{ secrets.FIREBASE_ADMIN }} > book_me_service_account_keys.json
+        run: echo "$FIREBASE_ADMIN" > book_me_service_account_keys.json
+        env:
+          FIREBASE_ADMIN: ${{ secrets.FIREBASE_ADMIN }}
       - name: Install firebase
         run: curl -sL https://firebase.tools | bash
       - name: Run firebase emulators
