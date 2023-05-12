@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/svelte';
 import Form from '../src/lib/Booking.svelte';
+import { axe, toHaveNoViolations } from 'jest-axe';
 
 describe('Form', () => {
   test('submits the form when all fields are valid', async () => {
@@ -32,5 +33,20 @@ describe('Form', () => {
     // Check that the form was submitted
     await component.$component.submitForm();
     expect(component.$component.submitted).toBe(true);
+  });
+});
+
+
+
+
+expect.extend(toHaveNoViolations);
+
+describe('Form accessibility', () => {
+  it('should have no accessibility violations', async () => {
+    const { container } = render(Form);
+
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 });
