@@ -64,6 +64,13 @@ jobs:
         run: |
           git config --global user.name "css4442_testing"
           git config --global user.email "css4442_testing@pytest.python"
+      - name: Install firebase
+        run: curl -sL https://firebase.tools | bash
+      - name: Run firebase emulators
+        run: firebase emulators:start --only auth,firestore &
+        env:
+          FIREBASE_AUTH_EMULATOR_HOST: localhost:9099
+          FIRESTORE_EMULATOR_HOST: localhost:8080
       - name: Run tests
         run: poetry run pytest -vv --exitfirst -n auto
 # TODO: Add coverage
