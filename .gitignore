@@ -170,3 +170,4 @@ firebase_config.json
 # visual studio code
 .vscode/
 
+Backend/poetry.lock
