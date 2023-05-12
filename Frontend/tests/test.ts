@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('index page has expected h1', async ({ page }) => {
-	await page.goto('/');
-	await expect(page.getByRole('heading', { name: 'Welcome to SvelteKit' })).toBeVisible();
+test('index page gets redirected to login page', async ({ page }) => {
+	await page.goto('http://localhost:3000');
+	expect(page.url()).toBe('http://localhost:3000/get_token');
 });
