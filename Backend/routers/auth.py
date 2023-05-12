@@ -1,20 +1,21 @@
 import traceback
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends, HTTPException, status, Response, FastAPI, Depends
-from firebase_admin import auth, credentials, initialize_app
+from firebase_admin import auth
 from fastapi import APIRouter
-
-cred = credentials.Certificate('../book_me_service_account_keys.json')
-initialize_app(cred)
+import os
 
 router = APIRouter()
 
-# signup endpoint
 
+
+
+
+# signup endpoint (not implemented)
 
 # login endpoint
 async def get_user_token(res: Response, credential: HTTPAuthorizationCredentials = Depends(HTTPBearer(auto_error=False))):
-    if cred is None:
+    if credential is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Bearer authentication is needed",
@@ -22,6 +23,7 @@ async def get_user_token(res: Response, credential: HTTPAuthorizationCredentials
         )
     try:
         print(credential.credentials)
+        
         decoded_token = auth.verify_id_token(credential.credentials)
     except Exception as err:
         traceback.print_exc()
