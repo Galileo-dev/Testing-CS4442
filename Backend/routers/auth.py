@@ -1,11 +1,10 @@
 import traceback
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends, HTTPException, status, Response, FastAPI, Depends
-from firebase_admin import auth, credentials, initialize_app
+from firebase_admin import auth, credentials
 from fastapi import APIRouter
 
 cred = credentials.Certificate('./book_me_service_account_keys.json')
-initialize_app(cred)
 
 router = APIRouter()
 

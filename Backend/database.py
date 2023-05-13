@@ -1,17 +1,23 @@
-from firebase_admin import credentials, firestore
+from datetime import timedelta
+from firebase_admin import credentials, firestore, initialize_app
 
-from reservation import Reservation
+from booking import Booking
 
 '''
 To Do
 --------
-1. Add reservation
-    -> add reservation to db
-2. Get reservations
-    -> return a list of all reservations on the db
+1. Get bookings
+    -> return a list of all bookings on the db
+2. Add booking
+    -> add booking to db
 '''
 
+# Required for testing
+# cred = credentials.Certificate('./book_me_service_account_keys.json')
+# initialize_app(cred)
+
 class Database:
+    
     cred = credentials.ApplicationDefault()
     db = firestore.client()
     
@@ -35,6 +41,43 @@ class Database:
                 return user.to_dict()        
         return None
     
+    def addBooking(self, booking: Booking):
+        entry = {
+            'start_time': booking.date_time,
+            'end_time': booking.date_time + timedelta(hours=1),
+            'uid': booking.uid
+        }
+        bookings_ref = self.db.collection('rooms').document(booking.room_id).collection('bookings')
+        update_time, ref = bookings_ref.add(entry)        
+        return ref.id
+        
+    def getBookings(self, room_id: str):
+        bookings_ref = self.db.collection('rooms').document(room_id).collection('bookings')
+        bookings_stream = bookings_ref.stream()
+        bookings = []
+        for booking in bookings_stream:
+            booking_dict = booking.to_dict()
+            new_booking = Booking(id=booking.id, room_id=room_id, uid=booking_dict['uid'], date_time=booking_dict['start_time'])
+            bookings.append(new_booking)
+        return bookings
+    
+    def cancelBooking(self, room_id: str, booking_id: str):
+        bookings_ref = self.db.collection('rooms').document(room_id).collection('bookings')
+        try:
+            bookings_ref.document(booking_id).delete()
+            return 'success'
+        except firestore.NotFound:
+            return 'not found'
     
     
-    def addReservation(self, reservation: Reservation)
+    # At the moment assuming that all bookings are 1 hr long. If we choose to
+    # allow for more flexibility this must be changed
+    def checkAvailable(self, booking: Booking):
+        db_bookings = self.getBookings(self, booking.room_id)
+        available = True
+        for db_booking in db_bookings:
+            # print("bid: " + booking.id)
+            if booking.check_overlap(db_booking):
+                available = False
+                
+        return available
