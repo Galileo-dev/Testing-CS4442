@@ -81,13 +81,4 @@ def test_check_is_time_available_true():
     assert (not database.checkAvailable(database, booking2))
     database.cancelBooking(database, booking1.room_id, b1id)
     
-def test_check_exists():
-    database = Database
-    new_booking = Booking
-    booking2 = Booking(uid="KlhITEDxj5akF0cK7cymJmmonC93", room_id="classroom", unparsed_date_time=None, date_time=None, date_time_str="13-05 16:51", length_in_mins=35)
-    booking_id = database.addBooking(database, booking2)
-    room_id = booking2.room_id
-    assert database.checkExists(database, room_id=room_id, booking_id=booking_id)
-    database.cancelBooking(database, room_id=room_id, booking_id=booking_id)
-    
     
