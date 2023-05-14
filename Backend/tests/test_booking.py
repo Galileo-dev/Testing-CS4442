@@ -66,7 +66,7 @@ def test_check_overlap_simple_false(firebase_app):
         length_in_mins=30,
     )
     booking2.format()
-    assert not booking1.check_overlap(booking2)
+    assert not booking1.check_overlap(booking)
 
 
 def test_check_overlap_border_true(firebase_app):
@@ -111,3 +111,88 @@ def test_check_overlap_border_false(firebase_app):
     )
     booking2.format()
     assert not booking1.check_overlap(booking2)
+
+def test_booking_at_midnight(firebase_app):
+    booking = Booking(
+        uid="JrDdit1L3qBhXcnWj9uU",
+        room_id="Y7xMXElgNqqxAiQOCQ3y",
+        unparsed_date_time=None,
+        date_time=None,
+        date_time_str="11-05 00:00",
+        length_in_mins=60,
+    )
+    booking.format()
+    assert booking.date_time.hour == 0
+    assert booking.date_time.minute == 0
+
+
+def test_booking_with_no_length(firebase_app):
+    booking = Booking(
+        uid="JrDdit1L3qBhXcnWj9uU",
+        room_id="Y7xMXElgNqqxAiQOCQ3y",
+        unparsed_date_time=None,
+        date_time=None,
+        date_time_str="11-05 12:00",
+        length_in_mins=None,
+    )
+    booking.format()
+    assert booking.length_in_mins == 0
+
+
+def test_booking_lasting_full_day(firebase_app):
+    booking = Booking(
+        uid="JrDdit1L3qBhXcnWj9uU",
+        room_id="Y7xMXElgNqqxAiQOCQ3y",
+        unparsed_date_time=None,
+        date_time=None,
+        date_time_str="11-05 00:00",
+        length_in_mins=1440, # 24 hours
+    )
+    booking.format()
+    assert booking.length_in_mins == 1440
+    assert booking.date_time.hour == 0
+    assert booking.date_time.minute == 0
+
+
+def test_check_overlap_start_of_day_true(firebase_app):
+    booking1 = Booking(
+        uid="JrDdit1L3qBhXcnWj9uU",
+        room_id="Y7xMXElgNqqxAiQOCQ3y",
+        unparsed_date_time=None,
+        date_time=None,
+        date_time_str="11-05 23:30",
+        length_in_mins=60,
+    )
+    booking1.format()
+    booking2 = Booking(
+        uid="JrDdit1L3qBhXcnWj9uU",
+        room_id="Y7xMXElgNqqxAiQOCQ3y",
+        unparsed_date_time=None,
+        date_time=None,
+        date_time_str="11-06 00:00",
+        length_in_mins=30,
+    )
+    booking2.format()
+    assert booking1.check_overlap(booking2)
+
+
+def test_check_overlap_end_of_day_true(firebase_app):
+    booking1 = Booking(
+        uid="JrDdit1L3qBhXcnWj9uU",
+        room_id="Y7xMXElgNqqxAiQOCQ3y",
+        unparsed_date_time=None,
+        date_time=None,
+        date_time_str="05-15 23:45",
+        length_in_mins=15,
+    )
+    booking1.format()
+    booking2 = Booking(
+        uid="JrDdit1L3qBhXcnWj9uU",
+        room_id="Y7xMXElgNqqxAiQOCQ3y",
+        unparsed_date_time=None,
+        date_time=None,
+        date_time_str="05-15 23:59",
+        length_in_mins=120,
+    )
+    booking2.format()
+    assert booking1.check_overlap(booking2)
