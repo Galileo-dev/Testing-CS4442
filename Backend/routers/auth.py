@@ -1,15 +1,11 @@
 import traceback
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends, HTTPException, status, Response, FastAPI, Depends
-from firebase_admin import auth
+from firebase_admin import auth, credentials
 from fastapi import APIRouter
 import os
 
 router = APIRouter()
-
-
-# signup endpoint (not implemented)
-
 
 # login endpoint
 async def get_user_token(
