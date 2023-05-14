@@ -1,19 +1,28 @@
+import pytest
 from Backend.booking import Booking
 
 
-def test_booking_class_formatter(firebase_app):
+@pytest.mark.parametrize(
+    "date_time_str, expected_month, expected_day, expected_hour, expected_minute",
+    [
+        ("11-05 12:36", 5, 11, 12, 36),
+        ("01-15 05:45", 1, 15, 5, 45),
+        ("06-25 23:59", 6, 25, 23, 59),
+    ],
+)
+def test_booking_class_formatter(firebase_app, date_time_str, expected_month, expected_day, expected_hour, expected_minute):
     booking = Booking(
         uid="JrDdit1L3qBhXcnWj9uU",
         room_id="Y7xMXElgNqqxAiQOCQ3y",
         unparsed_date_time=None,
         date_time=None,
-        date_time_str="11-05 12:36",
+        date_time_str=date_time_str,
     )
     booking.format()
-    assert booking.date_time.month == 5
-    assert booking.date_time.day == 11
-    assert booking.date_time.hour == 12
-    assert booking.date_time.minute == 36
+    assert booking.date_time.month == expected_month
+    assert booking.date_time.day == expected_day
+    assert booking.date_time.hour == expected_hour
+    assert booking.date_time.minute == expected_minute
 
 
 def test_check_overlap_simple_true(firebase_app):
