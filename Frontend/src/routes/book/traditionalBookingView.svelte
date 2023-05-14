@@ -1,50 +1,44 @@
 <script lang="ts">
 	import { auth } from '$lib/firebase';
 	import { userStore } from 'sveltefire';
-	const user = userStore(auth);
-
-	// get user token from subscription to userStore
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	export let data: PageData;
 
+	const user = userStore(auth);
+	let userToken = '';
+	user.subscribe((u) => {
+		if (u) {
+			u.getIdToken().then((t) => (userToken = t));
+		}
+	});
+
+	export let data: PageData;
 	let rooms = data.rooms;
 
-	// booking form handler
 	const bookingHandler = async (e: Event) => {
 		e.preventDefault();
 		const form = e.target as HTMLFormElement;
 		const formData = new FormData(form);
 		const data = Object.fromEntries(formData.entries());
-		let token = '';
-		// wait for user to be logged in
-		await user;
-		user.subscribe((u) => {
-			if (u) {
-				u.getIdToken().then((t) => (token = t));
-			}
-		});
 
-		let length_in_mins = 0;
-		if (data.checkin && data.checkout) {
-			const checkin = new Date(data['checkin'] as string);
-			const checkout = new Date(data['checkout'] as string);
-			length_in_mins = (checkout.getTime() - checkin.getTime()) / 60000;
-		}
+		// format datatime %d-%m %H:%M because server expects this format
+		let checkin = new Date(data.checkin as string);
+		data.checkin = `${checkin.getDate()}-${checkin.getMonth()} ${checkin.getHours()}:${checkin.getMinutes()}`;
 
 		let body = {
 			room_id: data.room_preference,
 			date_time_str: data.checkin,
-			length_in_mins: length_in_mins
+			length_in_mins: data.lengthofstay
 		};
 
-		console.log(data);
-		const res = await fetch('/api/add_booking', {
+		console.log(body);
+		const res = await fetch('http://127.0.0.1:8000/add_booking/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`
+				Authorization: `Bearer ${userToken}`
 			},
-			body: JSON.stringify(data)
+			body: JSON.stringify(body)
 		});
 		const json = await res.json();
 		console.log(json);
@@ -100,18 +94,25 @@
 		<hr />
 		<div class="elem-group inlined">
 			<label for="checkin-date">Check-in Date</label>
-			<input type="date" id="checkin-date" name="checkin" required />
+			<input type="datetime-local" id="checkin-date" name="checkin" required />
 		</div>
 		<div class="elem-group inlined">
-			<label for="checkout-date">Check-out Date</label>
-			<input type="date" id="checkout-date" name="checkout" required />
+			<label for="length-of-stay">Length of Stay (minutes)</label>
+			<input
+				type="number"
+				id="length-of-stay"
+				name="lengthofstay"
+				placeholder="60"
+				min="0"
+				required
+			/>
 		</div>
 		<div class="elem-group inlined">
 			<label for="adult">Number of People</label>
 			<input type="number" id="adult" name="total_adults" placeholder="2" min="1" required />
 		</div>
 		<div class="elem-group inlined">
-			<label for="room-selection">Select Room Preference</label>
+			<label for="room-selection">Select Room to Book</label>
 			<select id="room-selection" name="room_preference" required>
 				{#each rooms as room}
 					<option value={room.id}>{room.displayName}</option>
