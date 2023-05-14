@@ -2,5 +2,6 @@ fastapi
 uvicorn[standard]
 firebase-admin
 starlette
-urllib3==1.26.15 
+urllib3==1.26.15
+pytest
 openai

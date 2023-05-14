@@ -1,5 +1,5 @@
 import pytest
-from gptparser import GPTParser
+from Backend.gptparser import GPTParser
 
 parameters = [
     ("The eleventh of november at ten o'clock", "11-11 10:00"),
