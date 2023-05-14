@@ -22,7 +22,7 @@ def client():
 @pytest.fixture(scope="session")
 def firebase_app():
     # use anonymous credentials
-    cred = credentials.Certificate("../book_me_service_account_keys.json")
+    cred = credentials.Certificate("./book_me_service_account_keys.json")
     return initialize_app(cred)
 
 
@@ -62,4 +62,5 @@ def test_hello_user(client, firebase_user):
 
     # response = client.get('/api/user_token', headers={'Authorization': f'Bearer {custom_token}'})
     assert response.status_code == status.HTTP_200_OK
-    assert response.json() == {"msg": "Hello, user", "uid": f"{firebase_user.uid}"}
+    assert response.json() == {"msg": "Hello, user",
+                               "uid": f"{firebase_user.uid}"}
