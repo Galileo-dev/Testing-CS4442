@@ -5,11 +5,7 @@ from firebase_admin import auth, credentials
 from fastapi import APIRouter
 import os
 
-cred = credentials.Certificate('./book_me_service_account_keys.json')
-
 router = APIRouter()
-
-
 
 # login endpoint
 async def get_user_token(

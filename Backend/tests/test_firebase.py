@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 
-def test_firestore():
+def test_firestore(firebase_app):
     # Add some data to Firestore
     db = firestore.client()
     doc_ref = db.collection("users").document("alovelace")

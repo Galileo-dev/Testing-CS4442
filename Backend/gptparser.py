@@ -5,14 +5,14 @@ class GPTParser:
 
     openai.api_key = os.environ.get('OPENAI_API_KEY')
 
-    def data_extracter(response: str, delimiter: str):
+    def data_extracter(self, response: str, delimiter: str):
         for i in range(len(response)):
             if response[i] == delimiter:
                 for x in range(i+1, len(response)):
                     if response[x] == delimiter:
                         return response[i+1:x].lower()
 
-    def datetime_parser(string: str):
+    def datetime_parser(self, string: str):
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -33,7 +33,7 @@ class GPTParser:
         
         # response = response.choices[0].text
 
-        date = GPTParser.data_extracter(response, '%')
+        date = self.data_extracter(response, '%')
 
         return date
 
