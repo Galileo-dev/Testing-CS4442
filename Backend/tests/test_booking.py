@@ -196,3 +196,28 @@ def test_check_overlap_end_of_day_true(firebase_app):
     )
     booking2.format()
     assert booking1.check_overlap(booking2)
+
+
+    
+
+def test_invalid_date_time_string(firebase_app):
+    with pytest.raises(ValueError):
+        Booking(
+            uid="JrDdit1L3qBhXcnWj9uU",
+            room_id="Y7xMXElgNqqxAiQOCQ3y",
+            unparsed_date_time=None,
+            date_time=None,
+            date_time_str="invalid_date_time_string",
+        )
+
+
+def test_invalid_length(firebase_app):
+    with pytest.raises(ValueError):
+        Booking(
+            uid="JrDdit1L3qBhXcnWj9uU",
+            room_id="Y7xMXElgNqqxAiQOCQ3y",
+            unparsed_date_time=None,
+            date_time=None,
+            date_time_str="11-05 12:00",
+            length_in_mins=-10,
+        )
