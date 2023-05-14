@@ -1,13 +1,11 @@
 <script lang="ts">
 	import Search from '$lib/Search.svelte';
 
-	// handle
 	function handleSearch(query: string) {
 		console.log(query);
 	}
 </script>
 
-<!-- center -->
 <div class="flex flex-col items-center w-full">
 	<div class="w-full mt-8 mb-8">
 		<h1 class="text-center text-4xl font-bold text-gray-800 mb-2">
@@ -17,8 +15,6 @@
 			use <b>natural</b> text to get a list of <em>available bookings&trade;</em>
 		</p>
 	</div>
-
-	<!-- max width margin top -->
 	<div class="w-full mt-4">
 		<Search onSearch={handleSearch} />
 	</div>

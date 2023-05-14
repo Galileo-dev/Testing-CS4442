@@ -3,6 +3,7 @@
 	import { userStore } from 'sveltefire';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import Modal from '$lib/Modal.svelte';
 
 	const user = userStore(auth);
 	let userToken = '';
@@ -11,6 +12,12 @@
 			u.getIdToken().then((t) => (userToken = t));
 		}
 	});
+
+	let showModal = false;
+	const handleToggleModal = () => {
+		showModal = !showModal;
+	};
+	let modalContent = '';
 
 	export let data: PageData;
 	let rooms = data.rooms;
@@ -31,7 +38,6 @@
 			length_in_mins: data.lengthofstay
 		};
 
-		console.log(body);
 		const res = await fetch('http://127.0.0.1:8000/add_booking/', {
 			method: 'POST',
 			headers: {
@@ -42,6 +48,8 @@
 		});
 		const json = await res.json();
 		console.log(json);
+		modalContent = json.message;
+		showModal = true;
 	};
 </script>
 
@@ -132,6 +140,10 @@
 		<button type="submit">Book The Rooms</button>
 	</form>
 </div>
+
+<Modal title="Edit your details" open={showModal} on:close={() => handleToggleModal()}>
+	<svelte:fragment slot="body">{modalContent}</svelte:fragment>
+</Modal>
 
 <style>
 	body {
