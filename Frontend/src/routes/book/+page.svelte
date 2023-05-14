@@ -2,7 +2,8 @@
 	import Booking from './traditionalBookingView.svelte';
 	import Search from '$lib/Search.svelte';
 	import SearchView from './gptBookingView.svelte';
-
+	import type { PageData } from './$types';
+	export let data: PageData;
 	let bookingNew = true;
 </script>
 
@@ -17,7 +18,7 @@
 
 	<!-- if else -->
 	{#if bookingNew}
-		<Booking />
+		<Booking {data} />
 	{:else}
 		<SearchView />
 	{/if}

@@ -1,4 +1,54 @@
 <script lang="ts">
+	import { auth } from '$lib/firebase';
+	import { userStore } from 'sveltefire';
+	const user = userStore(auth);
+
+	// get user token from subscription to userStore
+	import type { PageData } from './$types';
+	export let data: PageData;
+
+	let rooms = data.rooms;
+
+	// booking form handler
+	const bookingHandler = async (e: Event) => {
+		e.preventDefault();
+		const form = e.target as HTMLFormElement;
+		const formData = new FormData(form);
+		const data = Object.fromEntries(formData.entries());
+		let token = '';
+		// wait for user to be logged in
+		await user;
+		user.subscribe((u) => {
+			if (u) {
+				u.getIdToken().then((t) => (token = t));
+			}
+		});
+
+		let length_in_mins = 0;
+		if (data.checkin && data.checkout) {
+			const checkin = new Date(data['checkin'] as string);
+			const checkout = new Date(data['checkout'] as string);
+			length_in_mins = (checkout.getTime() - checkin.getTime()) / 60000;
+		}
+
+		let body = {
+			room_id: data.room_preference,
+			date_time_str: data.checkin,
+			length_in_mins: length_in_mins
+		};
+
+		console.log(data);
+		const res = await fetch('/api/add_booking', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`
+			},
+			body: JSON.stringify(data)
+		});
+		const json = await res.json();
+		console.log(json);
+	};
 </script>
 
 <!-- make it 800px * 500px -->
@@ -16,7 +66,7 @@
 
 <div class="divider" />
 <div class="flex items-center justify-center">
-	<form id="form" action="/#" method="post">
+	<form id="form" method="post" on:submit|preventDefault={bookingHandler}>
 		<div class="elem-group">
 			<label for="name">Name</label>
 			<input
@@ -25,6 +75,8 @@
 				name="visitor_name"
 				placeholder="Name"
 				pattern="[A-Z\sa-z]{(3, 20)}"
+				value={$user?.displayName}
+				disabled
 				required
 			/>
 		</div>
@@ -35,19 +87,15 @@
 				id="email"
 				name="visitor_email"
 				placeholder="example@gmail.com"
+				value={$user?.email}
+				disabled
 				required
 			/>
 		</div>
 		<div class="elem-group">
 			<label for="phone">Phone Number</label>
-			<input
-				type="tel"
-				id="phone"
-				name="visitor_phone"
-				placeholder="498-348-3872"
-				pattern="(\d{3})-?\s?(\d{3})-?\s?(\d{4})"
-				required
-			/>
+
+			<input type="tel" id="phone" name="visitor_phone" placeholder="123-456-7890" required />
 		</div>
 		<hr />
 		<div class="elem-group inlined">
@@ -65,11 +113,9 @@
 		<div class="elem-group inlined">
 			<label for="room-selection">Select Room Preference</label>
 			<select id="room-selection" name="room_preference" required>
-				<option value="">Choose a Room</option>
-				<option value="connecting">Meeting Room</option>
-				<option value="adjoining">Kitchen</option>
-				<option value="adjacent">Class Room 1</option>
-				<option value="adjacent">Class Room 2</option>
+				{#each rooms as room}
+					<option value={room.id}>{room.displayName}</option>
+				{/each}
 			</select>
 		</div>
 		<hr />

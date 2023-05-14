@@ -2,12 +2,12 @@ from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from firebase_admin import credentials, initialize_app
-from firebase import Firebase
+from Backend.firebase import Firebase
 
 
 Firebase.get_firebase_app()
-from routers import booking, users, auth
-from dependencies import get_query_token, get_token_header
+from Backend.routers import booking, users, auth
+from Backend.dependencies import get_query_token, get_token_header
 
 
 app = FastAPI(dependencies=[])
