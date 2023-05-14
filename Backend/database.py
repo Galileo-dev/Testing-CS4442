@@ -1,6 +1,5 @@
 from datetime import timedelta
 from firebase_admin import credentials, firestore, initialize_app
-
 from booking import Booking
 
 '''
@@ -16,9 +15,11 @@ To Do
 # cred = credentials.Certificate('./book_me_service_account_keys.json')
 # initialize_app(cred)
 
+
+
 class Database:
     
-    cred = credentials.ApplicationDefault()
+    # cred = credentials.ApplicationDefault()
     db = firestore.client()
     
     def getFirstRoom(self):
