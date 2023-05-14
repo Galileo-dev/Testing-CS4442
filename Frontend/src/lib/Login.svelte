@@ -2,6 +2,8 @@
 	// import Modal from 'svelte-pieces/ui/Modal.svelte';
 	import { FirebaseUiAuth, saveUserData } from 'sveltefirets';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { redirect } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
 
 	let token: string;
 
@@ -17,6 +19,11 @@
 			copied = false;
 		}, 3000);
 	});
+
+	const handleAuthResult = (event: CustomEvent) => {
+		// Save user data and token
+		goto('/book');
+	};
 </script>
 
 <!-- <button
@@ -53,4 +60,5 @@
 		saveUserData(e.detail);
 		e.detail.user?.getIdToken().then((t) => (token = t));
 	}}
+	on:success={handleAuthResult}
 />
