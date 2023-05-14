@@ -4,3 +4,4 @@ firebase-admin
 starlette
 urllib3==1.26.15
 pytest
+openai
