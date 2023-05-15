@@ -4,7 +4,7 @@
 	import SearchView from './gptBookingView.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let bookingNew = true;
+	let bookingNew = false;
 </script>
 
 <div class="flex flex-col items-center">
@@ -18,6 +18,6 @@
 	{#if bookingNew}
 		<Booking {data} />
 	{:else}
-		<SearchView />
+		<SearchView {data} />
 	{/if}
 </div>

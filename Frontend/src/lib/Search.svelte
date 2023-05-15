@@ -7,6 +7,8 @@
 	let searchQuery = '';
 	let isFocused = false;
 	const searchQueryStore = writable('');
+	export let placeholder = '';
+	export let label = '';
 
 	onMount(() => {
 		searchQueryStore.subscribe((value) => {
@@ -22,25 +24,34 @@
 	function handleFocus() {
 		isFocused = true;
 	}
+
+	function handleSubmit() {
+		dispatch('submit', searchQuery);
+	}
 </script>
 
 <div class="w-3/4 mx-auto">
+	<label for="search" class="font-medium text-gray-700 ml-2 block">{label}</label>
+
 	<div
 		class="relative h-12 rounded-full border border-gray-300 focus-within:h-24 focus-within:rounded-md search-box"
 	>
 		<textarea
 			class="w-full h-full py-2 pr-8 pl-3 rounded-full border-none focus:outline-none"
-			placeholder="Search"
+			{placeholder}
+			id="search"
 			value={searchQuery}
 			on:input={handleInput}
 			on:focus={handleFocus}
 			style="resize: none;"
 		/>
-		<div class="flex justify-end mt-2">
-			<button class="px-4 py-2 rounded-full bg-blue-500 text-white font-bold" type="submit"
-				>Submit</button
-			>
-		</div>
+	</div>
+	<div class="flex justify-end mt-2">
+		<button
+			class="px-4 py-2 rounded-full bg-blue-500 text-white font-bold"
+			type="submit"
+			on:click={handleSubmit}>Submit</button
+		>
 	</div>
 </div>
 
