@@ -45,7 +45,7 @@ This project is aimed at designing, building, and testing a room booking system.
 - Python 3.11 or Higher
 - An internet connection
 
-### Setup
+### Usage
 
 1. Backend
 
@@ -87,20 +87,18 @@ This project is aimed at designing, building, and testing a room booking system.
 
 Our framework of choice is pytest. however, we need to test our code that uses Firestore and Firebase auth. we were able to test these without needing to make API calls to the normal Firebase service by using [Firebase emulator](https://firebase.google.com/docs/emulator-suite) which creates a local instance of Firebase for testing purposes. in a way, it's just a very fancy mock library.
 
-- in `/Backend` directory run:
+- in `/` root directory run:
 
   - install Firebase emulator
     ```sh
     npm install -g firebase-tools
     ```
-  - then run `firebase init` and press enter. allow it to download the necessary files.
-
   - to start the emulator with some preset data, run:
     ```sh
-    firebase emulators:exec --only auth,firestore --import=test-emulator-default
+    firebase emulators:start --only auth,firestore --import=test-emulator-default
     ```
   - this will run the emulator which must run in the background.
-  - in another terminal window, run:
+  - in another terminal window in the `/Backend` directory, run:
 
   ```sh
   pip install poetry
