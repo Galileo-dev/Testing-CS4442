@@ -13,4 +13,4 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Start the FastAPI server
-cd .. && uvicorn Backend.main:app --reload
+uvicorn app.main:app --reload
