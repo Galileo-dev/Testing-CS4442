@@ -6,11 +6,18 @@ from Backend.booking import Booking
     "date_time_str, expected_month, expected_day, expected_hour, expected_minute",
     [
         ("11-05 12:36", 5, 11, 12, 36),
-        ("01-15 05:45", 1, 15, 5, 45),
-        ("06-25 23:59", 6, 25, 23, 59),
+        ("15-01 05:45", 1, 15, 5, 45),
+        ("25-06 23:59", 6, 25, 23, 59),
     ],
 )
-def test_booking_class_formatter(firebase_app, date_time_str, expected_month, expected_day, expected_hour, expected_minute):
+def test_booking_class_formatter(
+    firebase_app,
+    date_time_str,
+    expected_month,
+    expected_day,
+    expected_hour,
+    expected_minute,
+):
     booking = Booking(
         uid="JrDdit1L3qBhXcnWj9uU",
         room_id="Y7xMXElgNqqxAiQOCQ3y",
@@ -66,7 +73,7 @@ def test_check_overlap_simple_false(firebase_app):
         length_in_mins=30,
     )
     booking2.format()
-    assert not booking1.check_overlap(booking)
+    assert not booking1.check_overlap(booking2)
 
 
 def test_check_overlap_border_true(firebase_app):
@@ -112,6 +119,7 @@ def test_check_overlap_border_false(firebase_app):
     booking2.format()
     assert not booking1.check_overlap(booking2)
 
+
 def test_booking_at_midnight(firebase_app):
     booking = Booking(
         uid="JrDdit1L3qBhXcnWj9uU",
@@ -146,7 +154,7 @@ def test_booking_lasting_full_day(firebase_app):
         unparsed_date_time=None,
         date_time=None,
         date_time_str="11-05 00:00",
-        length_in_mins=1440, # 24 hours
+        length_in_mins=1440,  # 24 hours
     )
     booking.format()
     assert booking.length_in_mins == 1440
@@ -197,8 +205,6 @@ def test_check_overlap_end_of_day_true(firebase_app):
     booking2.format()
     assert booking1.check_overlap(booking2)
 
-
-    
 
 def test_invalid_date_time_string(firebase_app):
     with pytest.raises(ValueError):
