@@ -133,21 +133,6 @@ def test_booking_at_midnight(firebase_app):
     assert booking.date_time.hour == 0
     assert booking.date_time.minute == 0
 
-
-@pytest.mark.skip(reason="Not implemented yet")
-def test_booking_with_no_length(firebase_app):
-    booking = Booking(
-        uid="JrDdit1L3qBhXcnWj9uU",
-        room_id="Y7xMXElgNqqxAiQOCQ3y",
-        unparsed_date_time=None,
-        date_time=None,
-        date_time_str="11-05 12:00",
-        length_in_mins=None,
-    )
-    booking.format()
-    assert booking.length_in_mins == 0
-
-
 def test_booking_lasting_full_day(firebase_app):
     booking = Booking(
         uid="JrDdit1L3qBhXcnWj9uU",

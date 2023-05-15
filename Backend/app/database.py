@@ -79,9 +79,11 @@ class Database:
         )
         try:
             bookings_ref.document(booking_id).delete()
-            return "success"
         except firestore.NotFound:
             return "not found"
+        except:
+            return "not found"
+        return "success"
 
     # At the moment assuming that all bookings are 1 hr long. If we choose to
     # allow for more flexibility this must be changed
