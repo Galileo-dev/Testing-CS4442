@@ -23,7 +23,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
-		"axe-core": "^4.7.0",
+		"axe-core": "^4.7.1",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.26.0",
@@ -44,6 +44,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@axe-core/playwright": "^4.7.0",
 		"@fontsource/poppins": "^4.5.10",
 		"msw": "^1.2.1",
 		"sveltefire": "^0.2.3"

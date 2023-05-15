@@ -1,0 +1,3 @@
+ECHO hello
+
+python --version
