@@ -13,7 +13,8 @@ router = APIRouter()
 @router.post("/add_booking/")
 async def add_booking(booking: Booking, user=Depends(get_user_token)):
     booking.uid = user["uid"]
-    if booking.unparsed_date_time is str:
+    # if string
+    if isinstance(booking.unparsed_date_time, str):
         booking.parse()
     booking.format()
 

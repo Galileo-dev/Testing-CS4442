@@ -45,6 +45,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource/poppins": "^4.5.10",
+		"msw": "^1.2.1",
 		"sveltefire": "^0.2.3"
 	}
 }
