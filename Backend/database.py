@@ -25,6 +25,11 @@ class Database:
         room = next(rooms)
         return room.to_dict()["displayName"]
 
+    def getRooms(self):
+        rooms_ref = self.db.collection("rooms")
+        rooms = rooms_ref.get()
+        return [{"id": doc.id, **doc.to_dict()} for doc in rooms]
+
     def getFirstUser(self):
         users_ref = self.db.collection("users")
         users = users_ref.stream()
