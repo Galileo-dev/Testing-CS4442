@@ -52,9 +52,9 @@
 	<header>
 		<h1>BookMe</h1>
 		<nav>
-			<a href="#">Something</a>
-			<a href="#">Swag</a>
-			<a href="#">Mike Tyson</a>
+			<a href="#">Make</a>
+			<a href="#">Bookings</a>
+			<a href="#">Below</a>
 			<a href="#">Ghoul</a>
 		</nav>
 	</header>
