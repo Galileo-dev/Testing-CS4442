@@ -1,4 +1,4 @@
-from Backend.firebase import Firebase
+from app.firebase import Firebase
 import pytest
 import os
 

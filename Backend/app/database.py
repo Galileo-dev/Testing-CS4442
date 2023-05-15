@@ -1,7 +1,7 @@
 from datetime import timedelta
 from firebase_admin import credentials, firestore, initialize_app
 
-from Backend.booking import Booking
+from app.booking import Booking
 
 """
 To Do
@@ -24,6 +24,11 @@ class Database:
         rooms = rooms_ref.stream()
         room = next(rooms)
         return room.to_dict()["displayName"]
+
+    def getRooms(self):
+        rooms_ref = self.db.collection("rooms")
+        rooms = rooms_ref.get()
+        return [{"id": doc.id, **doc.to_dict()} for doc in rooms]
 
     def getFirstUser(self):
         users_ref = self.db.collection("users")

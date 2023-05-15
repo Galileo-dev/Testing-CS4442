@@ -10,7 +10,7 @@ class Firebase:
         if cls._app is None:
             # get path to service account keys relative to this file
             path = os.path.join(
-                os.path.dirname(__file__), "book_me_service_account_keys.json"
+                os.path.dirname(__file__), "../book_me_service_account_keys.json"
             )
 
             cred = credentials.Certificate(path)

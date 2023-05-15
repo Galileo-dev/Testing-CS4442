@@ -1,6 +1,6 @@
 import pytest
-from Backend.booking import Booking
-from Backend.database import Database
+from app.booking import Booking
+from app.database import Database
 
 
 def test_basic_functionality_rooms(firebase_app):

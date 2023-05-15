@@ -36,7 +36,6 @@
 		"prettier-plugin-svelte": "^2.8.1",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
-		"sveltefirets": "^0.0.36",
 		"tailwindcss": "^3.3.2",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
@@ -45,6 +44,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/poppins": "^4.5.10"
+		"@fontsource/poppins": "^4.5.10",
+		"msw": "^1.2.1",
+		"sveltefire": "^0.2.3"
 	}
 }
