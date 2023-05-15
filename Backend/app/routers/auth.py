@@ -1,9 +1,8 @@
 import traceback
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from fastapi import Depends, HTTPException, status, Response, FastAPI, Depends
-from firebase_admin import auth, credentials
+from fastapi import Depends, HTTPException, status, Response, Depends
+from firebase_admin import auth
 from fastapi import APIRouter
-import os
 
 router = APIRouter()
 

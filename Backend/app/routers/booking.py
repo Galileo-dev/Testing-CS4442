@@ -34,7 +34,7 @@ async def add_booking(booking: Booking, user=Depends(get_user_token)):
 
 
 @router.delete("/cancel_booking/{room_id}/{booking_id}")
-def delete_booking(room_id, booking_id):
+def delete_booking(room_id, booking_id, user=Depends(get_user_token)):
     database = Database()
     response = database.cancelBooking(room_id=room_id, booking_id=booking_id)
     if response == "success":
