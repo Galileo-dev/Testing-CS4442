@@ -1,7 +1,10 @@
-name: Backend CI/CD
+name: Frontend CI/CD
 
 on:
+  push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 defaults:
   run:
@@ -17,55 +20,44 @@ jobs:
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@master
         with:
-          # All of these options are optional, so you can remove them if you are happy with the defaults
           concurrent_skipping: "same_content"
           skip_after_successful_duplicate: "true"
           paths_ignore: '["**/README.md"]'
 
       - uses: actions/checkout@v2
-      - name: Set up Node.js
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-        node-version: '14'
+          node-version: "16.x"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm install
+
   lint:
     needs: pre_job
     runs-on: ubuntu-latest
+
     steps:
+      - name: Lint
+        run: npm run lint
 
-      
-
-
-  pytest:
+  build:
     needs: pre_job
-    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"
-      - uses: actions/cache@v2
-        id: poetry-cache
-        with:
-          path: |
-            ~/.cache/pypoetry/virtualenvs
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry-
-      - name: Install deps
-        run: |
-          pip install -U pip
-          pip install poetry==1.4.2
-          poetry install
-        env:
-          POETRY_VIRTUALENVS_CREATE: false
-      - name: Setup GIT
-        run: |
-          git config --global user.name "css4442_testing"
-          git config --global user.email "css4442_testing@pytest.python"
-      - name: Run tests
-        run: poetry run pytest -vv --exitfirst -n auto
-# TODO: Add coverage
+      - name: Build
+        run: npm run build
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+      - name: Run Playwright tests
+        run: npm run test
