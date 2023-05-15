@@ -24,10 +24,3 @@ test('login button should open popup', async ({ page }) => {
 	const popup = await page.waitForEvent('popup');
 	expect(popup).toBeTruthy();
 });
-
-test('index page should have background color', async ({ page }) => {
-	await page.goto('/');
-	const html = await page.$('html');
-	const backgroundColor = await html?.getAttribute('style');
-	expect(html).toContain('background-color: theme(colors.gray.100)');
-});

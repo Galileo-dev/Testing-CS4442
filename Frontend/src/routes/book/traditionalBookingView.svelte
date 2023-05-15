@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import Modal from '$lib/Modal.svelte';
+	import { addBooking } from '$lib/Booking';
 
 	const user = userStore(auth);
 	let userToken = '';
@@ -38,14 +39,7 @@
 			length_in_mins: data.lengthofstay
 		};
 
-		const res = await fetch('http://127.0.0.1:8000/add_booking/', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${userToken}`
-			},
-			body: JSON.stringify(body)
-		});
+		let res = await addBooking(body, userToken);
 		const json = await res.json();
 		console.log(json);
 		modalContent = json.message;
