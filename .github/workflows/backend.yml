@@ -72,10 +72,10 @@ jobs:
       - name: Run firebase emulators
         run: |
           cd ../
-          firebase emulators:exec --only auth,firestore --import=test-emulator-default "cd Backend && poetry run pytest -vv --exitfirst"
+          firebase emulators:exec --only auth,firestore --import=test-emulator-default "cd Backend && poetry run pytest -vv --exitfirst --cov=app ./tests/"
         env:
           FIREBASE_AUTH_EMULATOR_HOST: localhost:9099
           FIRESTORE_EMULATOR_HOST: localhost:8080
-      # - name: Run tests
-      #   run: poetry run pytest -vv --exitfirst
+      - name: Run tests
+        run: poetry run pytest -vv --exitfirst
 # TODO: Add coverage
