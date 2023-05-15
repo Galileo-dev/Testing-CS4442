@@ -1,5 +1,5 @@
 import pytest
-from Backend.booking import Booking
+from app.booking import Booking
 
 
 @pytest.mark.parametrize(
@@ -163,14 +163,13 @@ def test_booking_lasting_full_day(firebase_app):
     assert booking.date_time.minute == 0
 
 
-@pytest.mark.skip(reason="Broken")
 def test_check_overlap_start_of_day_true(firebase_app):
     booking1 = Booking(
         uid="JrDdit1L3qBhXcnWj9uU",
         room_id="Y7xMXElgNqqxAiQOCQ3y",
         unparsed_date_time=None,
         date_time=None,
-        date_time_str="11-05 23:30",
+        date_time_str="11-06 23:30",
         length_in_mins=60,
     )
     booking1.format()
@@ -179,21 +178,20 @@ def test_check_overlap_start_of_day_true(firebase_app):
         room_id="Y7xMXElgNqqxAiQOCQ3y",
         unparsed_date_time=None,
         date_time=None,
-        date_time_str="11-06 00:00",
+        date_time_str="12-06 00:00",
         length_in_mins=30,
     )
     booking2.format()
     assert booking1.check_overlap(booking2)
 
 
-@pytest.mark.skip(reason="Broken")
 def test_check_overlap_end_of_day_true(firebase_app):
     booking1 = Booking(
         uid="JrDdit1L3qBhXcnWj9uU",
         room_id="Y7xMXElgNqqxAiQOCQ3y",
         unparsed_date_time=None,
         date_time=None,
-        date_time_str="05-15 23:45",
+        date_time_str="05-12 23:45",
         length_in_mins=15,
     )
     booking1.format()
@@ -202,29 +200,28 @@ def test_check_overlap_end_of_day_true(firebase_app):
         room_id="Y7xMXElgNqqxAiQOCQ3y",
         unparsed_date_time=None,
         date_time=None,
-        date_time_str="05-15 23:59",
+        date_time_str="05-12 23:59",
         length_in_mins=120,
     )
     booking2.format()
     assert booking1.check_overlap(booking2)
 
 
-@pytest.mark.skip(reason="Not implemented yet")
 def test_invalid_date_time_string(firebase_app):
     with pytest.raises(ValueError):
-        Booking(
+        booking = Booking(
             uid="JrDdit1L3qBhXcnWj9uU",
             room_id="Y7xMXElgNqqxAiQOCQ3y",
             unparsed_date_time=None,
             date_time=None,
             date_time_str="invalid_date_time_string",
         )
+        booking.format()
 
 
-@pytest.mark.skip(reason="Not implemented yet")
 def test_invalid_length(firebase_app):
     with pytest.raises(ValueError):
-        Booking(
+        booking = Booking(
             uid="JrDdit1L3qBhXcnWj9uU",
             room_id="Y7xMXElgNqqxAiQOCQ3y",
             unparsed_date_time=None,
@@ -232,3 +229,4 @@ def test_invalid_length(firebase_app):
             date_time_str="11-05 12:00",
             length_in_mins=-10,
         )
+        booking.format()

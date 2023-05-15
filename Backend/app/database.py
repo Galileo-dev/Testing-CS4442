@@ -1,7 +1,7 @@
 from datetime import timedelta
 from firebase_admin import credentials, firestore, initialize_app
 
-from Backend.booking import Booking
+from app.booking import Booking
 
 """
 To Do

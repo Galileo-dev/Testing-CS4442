@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional
 from pydantic import BaseModel
 
-from Backend.gptparser import GPTParser
+from app.gptparser import GPTParser
 
 
 class Booking(BaseModel):
@@ -12,7 +12,7 @@ class Booking(BaseModel):
     unparsed_date_time: Optional[str] = None
     date_time_str: Optional[str] = None
     date_time: Optional[datetime] = None
-    length_in_mins: Optional[int] = 60
+    length_in_mins: int = 60
 
     def parse(self):
         if not isinstance(self.unparsed_date_time, str):
@@ -23,6 +23,9 @@ class Booking(BaseModel):
         )
 
     def format(self):
+        if self.length_in_mins < 1:
+            raise ValueError("length_in_mins cannot be negative or zero")
+
         if not isinstance(self.date_time_str, str):
             assert False, "date_time_str is not a string"
 

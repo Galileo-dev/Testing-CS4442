@@ -3,14 +3,16 @@ from fastapi import status
 from fastapi.testclient import TestClient
 from firebase_admin import auth, initialize_app, credentials
 import requests
-from Backend.routers.auth import router
+from app.routers.auth import router
 
 
 import os
 
+
 @pytest.fixture
 def client():
     return TestClient(router)
+
 
 @pytest.fixture
 def firebase_auth(firebase_app):
@@ -26,7 +28,8 @@ def firebase_user(firebase_auth):
     return user
 
 
-def test_hello_user(client, firebase_user):
+@pytest.fixture
+def firebase_test_token(firebase_user):
     custom_token = auth.create_custom_token(firebase_user.uid).decode("utf-8")
 
     url = "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=hello"
@@ -42,11 +45,14 @@ def test_hello_user(client, firebase_user):
         # show in test
         assert False, error_message
 
+    return id_token
+
+
+def test_hello_user(client, firebase_user, firebase_test_token):
     response = client.get(
-        "/api/user_token", headers={"Authorization": f"Bearer {id_token}"}
+        "/api/user_token", headers={"Authorization": f"Bearer {firebase_test_token}"}
     )
 
     # response = client.get('/api/user_token', headers={'Authorization': f'Bearer {custom_token}'})
     assert response.status_code == status.HTTP_200_OK
-    assert response.json() == {"msg": "Hello, user",
-                               "uid": f"{firebase_user.uid}"}
+    assert response.json() == {"msg": "Hello, user", "uid": f"{firebase_user.uid}"}

@@ -1,9 +1,9 @@
 import datetime
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from Backend.booking import Booking
-from Backend.database import Database
-from Backend.routers.auth import get_user_token
+from app.booking import Booking
+from app.database import Database
+from app.routers.auth import get_user_token
 from typing import Optional
 from datetime import datetime
 
